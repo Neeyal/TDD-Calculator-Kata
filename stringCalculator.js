@@ -7,7 +7,18 @@ function add(numbers) {
         return numbers.split(delimiter).map(Number).reduce((a, b) => a + b, 0);
     }
 
-    return numbers.split(/[,\n]/).map(Number).reduce((a, b) => a + b, 0);
+    const negativeNumbers = [];
+    const numArray = numbers.split(/[,\n;]/).map(Number);
+
+    numArray.forEach(num => {
+        if (num < 0) negativeNumbers.push(num);
+    });
+
+    if (negativeNumbers.length > 0) {
+        throw new Error('negatives not allowed: ' + negativeNumbers.join(', '));
+    }
+
+    return numbers.split(/[,\n;]/).map(Number).reduce((a, b) => a + b, 0);
 }
 
 module.exports = add
