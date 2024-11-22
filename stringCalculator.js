@@ -8,7 +8,7 @@ function add(numbers) {
     }
 
     const negativeNumbers = [];
-    const numArray = numbers.split(/[,\n;]/).map(Number);
+    const numArray = numbers.split(/[,\n;]/).map(Number).filter(num => num <= 1000);
 
     numArray.forEach(num => {
         if (num < 0) negativeNumbers.push(num);
@@ -18,7 +18,7 @@ function add(numbers) {
         throw new Error('negatives not allowed: ' + negativeNumbers.join(', '));
     }
 
-    return numbers.split(/[,\n;]/).map(Number).reduce((a, b) => a + b, 0);
+    return numArray.reduce((a, b) => a + b, 0);
 }
 
 module.exports = add
