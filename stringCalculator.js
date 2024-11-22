@@ -1,13 +1,17 @@
 function add(numbers) {
-    if (!numbers) return 0 // Empty string case
-
-    if (numbers.startsWith('//')) {
-        const delimiter = numbers[2];
-        numbers = numbers.slice(4);
-        return numbers.split(delimiter).map(Number).reduce((a, b) => a + b, 0);
-    }
+    if (!numbers) return 0;  // Empty string case
 
     const negativeNumbers = [];
+
+    if (numbers.startsWith('//')) {
+        const delimiterSection = numbers.split('\n')[0];
+        const delimiters = delimiterSection.slice(2).split('][').map(d => d.replace(/[\[\]]/g, ''));
+        numbers = numbers.slice(delimiterSection.length + 1);
+        
+        let regex = new RegExp('[' + delimiters.join('') + ']');
+        numbers = numbers.split(regex).join(',');
+    }
+
     const numArray = numbers.split(/[,\n;]/).map(Number).filter(num => num <= 1000);
 
     numArray.forEach(num => {
@@ -21,4 +25,4 @@ function add(numbers) {
     return numArray.reduce((a, b) => a + b, 0);
 }
 
-module.exports = add
+module.exports = add;

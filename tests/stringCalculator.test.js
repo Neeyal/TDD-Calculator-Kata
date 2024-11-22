@@ -41,4 +41,8 @@ describe('String Calculator', () => {
     test('should ignore numbers greater than 1000', () => {
         expect(add('1001,2')).toBe(2);
     });
+
+    test('should support multiple delimiters', () => {
+        expect(add('//[;][*]\n1;2*3')).toBe(6);
+    });
 })
