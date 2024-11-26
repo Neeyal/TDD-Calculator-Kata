@@ -36,6 +36,10 @@ describe('String Calculator', () => {
     expect(calculator.add('//|\n4|5|6')).toBe(15)
   })
 
+  test('should support custom delimiters with special case *', () => {
+    expect(calculator.add('//*\n4*5*6')).toBe(120)
+  })
+
   test('should throw an error for negative numbers', () => {
     expect(() => calculator.add('1,-2')).toThrow('negatives not allowed: -2')
   })
@@ -49,7 +53,7 @@ describe('String Calculator', () => {
   })
 
   test('should support multiple delimiters', () => {
-    expect(calculator.add('//[;][*]\n1;2*3')).toBe(6)
+    expect(calculator.add('//[;][+]\n1;2;3')).toBe(6)
   })
 
   test('should support delimiters of any length', () => {
@@ -57,6 +61,6 @@ describe('String Calculator', () => {
   })
 
   test('should support delimiters with different characters', () => {
-    expect(calculator.add('//[*][%]\n1*2%3')).toBe(6)
+    expect(calculator.add('//[;][%]\n1;2%3')).toBe(6)
   })
 })

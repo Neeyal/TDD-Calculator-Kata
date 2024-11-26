@@ -4,6 +4,8 @@ class StringCalculator {
     }
   
     add(numbers) {
+      this.multiplicationDelimeter = '*' 
+      this.isMultiplicationDelimeter = false
       if (!numbers) return 0
       this.negativeNumbers = []
   
@@ -14,6 +16,9 @@ class StringCalculator {
       const numArray = this._parseNumbers(numbers)
       this._checkForNegatives(numArray)
   
+      if(this.isMultiplicationDelimeter){
+        return this._multiply(numArray)
+      }
       return this._sum(numArray)
     }
   
@@ -24,6 +29,9 @@ class StringCalculator {
     _extractCustomDelimiter(numbers) {
       const delimiterSection = numbers.split('\n')[0]
       const delimiters = this._getDelimiters(delimiterSection)
+      if(delimiters.includes(this.multiplicationDelimeter)) {
+          this.isMultiplicationDelimeter = true
+      }
       numbers = numbers.slice(delimiterSection.length + 1)
   
       let regex = new RegExp('[' + delimiters.join('') + ']')
@@ -47,9 +55,13 @@ class StringCalculator {
         throw new Error('negatives not allowed: ' + this.negativeNumbers.join(', '))
       }
     }
-  
+    
     _sum(numArray) {
       return numArray.reduce((a, b) => a + b, 0)
+    }
+
+    _multiply(numArray) {
+        return numArray.reduce((a, b) => a * b)
     }
   }
   
