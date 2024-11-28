@@ -53,7 +53,7 @@ describe('String Calculator', () => {
   })
 
   test('should support multiple delimiters', () => {
-    expect(calculator.add('//[;][+]\n1;2;3')).toBe(6)
+    expect(calculator.add('//[;][*]\n2;2*3')).toBe(7)
   })
 
   test('should support delimiters of any length', () => {
@@ -61,6 +61,6 @@ describe('String Calculator', () => {
   })
 
   test('should support delimiters with different characters', () => {
-    expect(calculator.add('//[;][%]\n1;2%3')).toBe(6)
+    expect(calculator.add('//[*][%]\n1*2%3')).toBe(6)
   })
 })

@@ -1,69 +1,76 @@
 class StringCalculator {
-    constructor() {
-      this.delimiters = [',', '\n', ';']
-    }
-  
-    add(numbers) {
-      this.multiplicationDelimeter = '*' 
-      this.isMultiplicationDelimeter = false
-      if (!numbers) return 0
-      this.negativeNumbers = []
-  
-      if (this._hasCustomDelimiter(numbers)) {
-        numbers = this._extractCustomDelimiter(numbers)
-      }
-  
-      const numArray = this._parseNumbers(numbers)
-      this._checkForNegatives(numArray)
-  
-      if(this.isMultiplicationDelimeter){
-        return this._multiply(numArray)
-      }
-      return this._sum(numArray)
-    }
-  
-    _hasCustomDelimiter(numbers) {
-      return numbers.startsWith('//')
-    }
-  
-    _extractCustomDelimiter(numbers) {
-      const delimiterSection = numbers.split('\n')[0]
-      const delimiters = this._getDelimiters(delimiterSection)
-      if(delimiters.includes(this.multiplicationDelimeter)) {
-          this.isMultiplicationDelimeter = true
-      }
-      numbers = numbers.slice(delimiterSection.length + 1)
-  
-      let regex = new RegExp('[' + delimiters.join('') + ']')
-      return numbers.split(regex).join(',')
-    }
-  
-    _getDelimiters(delimiterSection) {
-      return delimiterSection.slice(2).split('][').map(d => d.replace(/[\[\]]/g, ''))
-    }
-  
-    _parseNumbers(numbers) {
-      return numbers.split(/[,\n;]/).map(Number).filter(num => num <= 1000)
-    }
-  
-    _checkForNegatives(numArray) {
-      numArray.forEach(num => {
-        if (num < 0) this.negativeNumbers.push(num)
-      })
-  
-      if (this.negativeNumbers.length > 0) {
-        throw new Error('negatives not allowed: ' + this.negativeNumbers.join(', '))
-      }
-    }
-    
-    _sum(numArray) {
-      return numArray.reduce((a, b) => a + b, 0)
+  constructor() {
+    this.delimiters = [",", "\n", ";"];
+  }
+
+  add(numbers) {
+    this.multiplicationDelimeter = "*";
+    this.isMultiplicationDelimeter = false;
+    if (!numbers) return 0;
+    this.negativeNumbers = [];
+
+    if (this._hasCustomDelimiter(numbers)) {
+      numbers = this._extractCustomDelimiter(numbers);
     }
 
-    _multiply(numArray) {
-        return numArray.reduce((a, b) => a * b)
+    const numArray = this._parseNumbers(numbers);
+    this._checkForNegatives(numArray);
+
+    if (this.isMultiplicationDelimeter) {
+      return this._multiply(numArray);
+    }
+    return this._sum(numArray);
+  }
+
+  _hasCustomDelimiter(numbers) {
+    return numbers.startsWith("//");
+  }
+
+  _extractCustomDelimiter(numbers) {
+    const delimiterSection = numbers.split("\n")[0];
+    const delimiters = this._getDelimiters(delimiterSection);
+    if (delimiters.includes(this.multiplicationDelimeter)) {
+      this.isMultiplicationDelimeter = true;
+    }
+    numbers = numbers.slice(delimiterSection.length + 1);
+
+    let regex = new RegExp("[" + delimiters.join("") + "]");
+    return numbers.split(regex).join(",");
+  }
+
+  _getDelimiters(delimiterSection) {
+    return delimiterSection
+      .slice(2)
+      .split("][")
+      .map((d) => d.replace(/[\[\]]/g, ""));
+  }
+
+  _parseNumbers(numbers) {
+    return numbers
+      .split(/[,\n;]/)
+      .map(Number)
+      .filter((num) => num <= 1000);
+  }
+
+  _checkForNegatives(numArray) {
+    numArray.forEach((num) => {
+      if (num < 0) this.negativeNumbers.push(num);
+    });
+
+    if (this.negativeNumbers.length > 0) {
+      throw new Error(
+        "negatives not allowed: " + this.negativeNumbers.join(", ")
+      );
     }
   }
-  
-  module.exports = StringCalculator
-    
+
+  _sum(numArray) {
+    return numArray.reduce((a, b) => a + b, 0);
+  }
+
+  _multiply(numArray) {
+    return numArray.reduce((a, b) => a * b);
+  }
+}
+
+module.exports = StringCalculator;
